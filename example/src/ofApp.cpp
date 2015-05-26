@@ -72,7 +72,7 @@ void ofApp::setup(){
     soundStream.setup(this,0, 1, sampleRate, bufferSize, 1);
     
     
-    loadSong("assets/sounds/Coltrane_acc_VUIMM");
+    loadSong("assets/sounds/Coltrane_acc_VUIMM.wav");
 }
 
 
@@ -233,7 +233,7 @@ void ofApp::draw(){
             
              str<<"Note freq: "<< gist.getNoteFrequency()<<" "<<gist.getNoteName() <<"\n";
         }else{
-            str<<"Drag and drop wave files from assets/sounds.";
+            str<<"Drag and drop wave files from data folder.";
         }
         
         ofSetColor(255);
@@ -283,12 +283,12 @@ void ofApp::clear(){
 }
 
 
-void ofApp::loadSong(string str, bool isLead){
+void ofApp::loadSong(string str){
     
     cout<<"loadSong "<<str<<endl;
     
     player.stop();
-    player.loadSound(str+".wav");
+    player.loadSound(str);
     player.setLoop(true);
     player.play();
     useMic = 0;
@@ -392,23 +392,9 @@ void ofApp::gotMessage(ofMessage msg){
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-    
+void ofApp::dragEvent(ofDragInfo dragInfo){
     clear();
-    
-    
-    vector<string> paths = ofSplitString(dragInfo.files[0], "/");
-    vector<string> parts = ofSplitString(paths.back(), ".");
-    
-    //drag and drop only lead
-    loadSong("assets/sounds/"+parts[0],true);
-    //    cout<<dragInfo.files[0]<<endl;
-    
-    
-    /*
-    if(ofStringTimesInString(parts[0], "lead")){
-        ofStringReplace(parts[0], "lead", "acc");
-        loadSong("assets/sounds/"+parts[0]);
-    }*/
+    vector<string> paths = ofSplitString(dragInfo.files[0], "data/");
+    loadSong(paths[1]);
 
 }

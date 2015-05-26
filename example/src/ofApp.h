@@ -2,7 +2,16 @@
 
 #include "ofMain.h"
 
+//This is included only as a way of getting buffer out of loaded sound.
+//There are many other ways you can do that.
+//This player includes a version of kissFFT. You can remove the one included in Gist.
+//https://github.com/borg/ofxOpenALSoundPlayer
 #include "ofxOpenALSoundPlayer.h"
+
+
+//Slightly modified to add a dynamic getVariable method to be able to plot based on
+//gist feature list
+//https://github.com/local-projects/ofxHistoryPlot
 #include "ofxHistoryPlot.h"
 #include "ofxGist.h"
 
@@ -32,7 +41,7 @@ class ofApp : public ofBaseApp{
         vector<float>fftSmoothed;
     
         vector<float>mfccSmoothed;
-    float mfccMax;
+        float mfccMax;
     
         
         int bufferSize;
@@ -42,7 +51,7 @@ class ofApp : public ofBaseApp{
         bool isPaused;
         
         void clear();
-        void loadSong(string str, bool isLead =0);
+        void loadSong(string str);
 
         
         vector<ofxHistoryPlot *>plots;
