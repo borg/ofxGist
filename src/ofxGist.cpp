@@ -2,8 +2,8 @@
  *  ofxGist.cpp
  *  Gist
  *
- *  Created by Andreas Borg on 30/03/2015
- *  Copyright 2015 __MyCompanyName__. All rights reserved.
+ *  Created by Andreas Borg on 30/03/2017
+ *  Copyright 2017 Elevated Digital LLC. All rights reserved.
  *
  */
 
@@ -68,7 +68,7 @@ void ofxGist::processAudio(const vector<float>& input, int bufferSize, int nChan
                    // yin.setSamplingFrequency(sampleRate);
                     //_values[GIST_PITCH] = MAX(0,yin.pitchYin(input));
                     
-                    _values[GIST_PITCH] = MAX(0,gist.pitchYin());
+                    _values[GIST_PITCH] = MAX(0,gist.pitch());
                     
                     if(_useForOnsetDetection[_features[v]]){
                         processOnsetDetection(_features[v]);
@@ -188,8 +188,16 @@ void ofxGist::processAudio(const vector<float>& input, int bufferSize, int nChan
                 break;
                 
                 
-                
-                
+            case GIST_ENERGY_DIFFERENCE:
+                if(_doDetect[_features[v]] ){
+                    _values[GIST_ENERGY_DIFFERENCE] = gist.energyDifference();
+                    
+                    if(_useForOnsetDetection[_features[v]]){
+                        processOnsetDetection(_features[v]);
+                    }
+                }
+                break;
+
                 
                 
             case GIST_SPECTRAL_DIFFERENCE_HALFWAY:
@@ -306,7 +314,7 @@ void ofxGist::processOnsetDetection(GIST_FEATURE feature){
     if(bigChange == 1 && !_isNoteOn){
         GistEvent e;
         e.energy = gist.peakEnergy();
-        e.frequency = gist.pitchYin();
+        e.frequency = gist.pitch();
         e.feature = feature;
         e.note = getNoteFrequency();
         e.onsetAmount = _values[feature];
@@ -315,7 +323,7 @@ void ofxGist::processOnsetDetection(GIST_FEATURE feature){
     }else if(bigChange == -1 && _isNoteOn){
         GistEvent e;
         e.energy = gist.peakEnergy();
-        e.frequency = gist.pitchYin();
+        e.frequency = gist.pitch();
         e.feature = feature;
         e.note = getNoteFrequency();
         e.onsetAmount = _values[feature];
@@ -490,12 +498,12 @@ void ofxGist::clearHistory(){
 
 vector<float> ofxGist::getMelFrequencySpectrum(){
     _calculateMFCC = true;
-    return gist.melFrequencySpectrum();
+    return gist.getMelFrequencySpectrum();
 };
 
 vector<float> ofxGist::getMelFrequencyCepstralCoefficients(){
     _calculateMFCC = true;
-    return gist.melFrequencyCepstralCoefficients();
+    return gist.getMelFrequencyCepstralCoefficients();
 };
 
 

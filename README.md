@@ -7,6 +7,8 @@ An openFrameworks implementation of Adam Stark's real-time sound analysis librar
 
 https://github.com/adamstark/Gist
 
+NOTE UPDATE Nov 10, 2017
+Develop branch has begun update to latest Gist version. May not be complete yet.
 
 NOTE UPDATE May 25, 2015
 

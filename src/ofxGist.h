@@ -2,8 +2,8 @@
  *  ofxGist.h
  *  Gist
  *
- *  Created by Andreas Borg on 30/03/2015
- *  Copyright 2015 Local Projects. All rights reserved.
+ *  Created by Andreas Borg on 30/03/2017
+ *  Copyright 2017 Elevated Digital LLC. All rights reserved.
  *
  *  Wrapper of Adam Stark's Gist
  *  Gist is a C++ based audio analysis library, written for use in real-time applications.
@@ -18,9 +18,12 @@
 
 #include "ofMain.h"
 
+//Use Apple accelerate framework. Make sure to include
+#define USE_ACCELERATE_FFT
+
 /* Use KISS Fast Fourier Transform */
 //needs to be included before Gist..also make sure there is only one kiss instance in your project
-#define USE_KISS_FFT
+//#define USE_KISS_FFT
 
 #include "Gist.h"
 
@@ -66,6 +69,7 @@ typedef enum GIST_FEATURE{
     GIST_SPECTRAL_DIFFERENCE,
     GIST_SPECTRAL_DIFFERENCE_COMPLEX,
     GIST_SPECTRAL_DIFFERENCE_HALFWAY,
+    GIST_ENERGY_DIFFERENCE,
     GIST_HIGH_FREQUENCY_CONTENT
     
 }GIST_FEATURE;
@@ -119,8 +123,8 @@ class ofxGist {
         str<<"GIST_SPECTRAL_DIFFERENCE,";
         str<<"GIST_SPECTRAL_DIFFERENCE_COMPLEX,";
         str<<"GIST_SPECTRAL_DIFFERENCE_HALFWAY,";
+        str<<"GIST_ENERGY_DIFFERENCE,";
         str<<"GIST_HIGH_FREQUENCY_CONTENT";
-        
         
         ofxGist::_featureNames = ofSplitString(str.str(),",");
         return ofxGist::_featureNames;
