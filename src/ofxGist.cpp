@@ -442,6 +442,7 @@ float ofxGist::getNoteFrequency(){
   if(_doDetect[GIST_PITCH] ){
       return frequencyToMidi(_values[GIST_PITCH]);
   }
+  return 0.0;
 };
 
 
